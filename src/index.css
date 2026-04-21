@@ -1,0 +1,667 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+==========================================================================
+【AI HANDOVER NOTE】
+1. DESIGN PHILOSOPHY:
+   - Quiet Luxury (静奢风) & Tropical Modernism: This design prioritizes 'silence' and 'space' over loud visual elements. It draws inspiration from Bali's high-end boutique resorts and architectural minimalism.
+   - Visual Style: 'Metropolitan Minimalist' (都会极简). Focuses on precision lines, soft organic shadows (Ambient Occlusion), and a sense of 'physicality' through subtle textures and rim-lighting on card components.
+   - Rationale: High-end real estate investors seek tranquility and professional reliability. The extensive use of whitespace and high-quality typography mirrors the spaciousness of luxury villas.
+
+2. TYPOGRAPHY:
+   - Sans: Plus Jakarta Sans was chosen for its geometric clarity and contemporary warmth, paired with Noto Sans SC to maintain a premium feel for Simplified Chinese characters. The tracking (letter-spacing) should be slightly wider for titles to evoke luxury.
+   - Mono: JetBrains Mono is used for property metrics (sqm, price, coordinates) and technical legal clauses to convey precision and data-driven transparency.
+
+3. COLOR SYSTEM:
+   - Brand Palette: The core is built on 'Sand & Basalt'. Hue (H: 60) represents warm limestone and natural textures. Chroma is kept extremely low (< 0.05) to achieve the 'Quiet' aesthetic.
+   - Mapping: --primary is a deep 'Basalt' charcoal, used for essential call-to-actions and brand marks. --accent uses a soft 'Sand' tone to highlight active states without breaking the neutral harmony.
+   - Semantics: Success is a muted 'Forest Green', Warning is a 'Burned Ochre', and Destructive is a 'Terracotta Red'—all inspired by Bali’s natural environment rather than synthetic digital colors.
+
+4. USAGE GUIDE:
+   - Layout: Centered container for editorial content; full-width hero sections for immersive villa photography.
+   - Effects: Use `backdrop-blur` (12px-20px) on navigation and popovers to create depth. Border-radii are kept tight (0.5rem) for an architectural, crisp feel.
+   - Grid: Strict 12-column grid with generous gutters (32px+) to prevent visual clutter.
+==========================================================================
+*/
+
+:root {
+  /* Typography */
+  --font-sans: "Inter", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  /* Radius - Sharp corners for minimalist look */
+  --radius: 0rem;
+
+  /* Core UI Tokens - Pure minimalist palette (restored) */
+  --background: oklch(1 0 0);  /* Pure white */
+  --foreground: oklch(0.15 0 0);  /* Deep black */
+  --card: oklch(1 0 0);  /* Pure white */
+  --card-foreground: oklch(0.15 0 0);  /* Deep black */
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0 0);
+  --primary: oklch(0.15 0 0);  /* Deep black for primary */
+  --primary-foreground: oklch(1 0 0);  /* White text on black */
+  --secondary: oklch(0.97 0 0);  /* Very light gray */
+  --secondary-foreground: oklch(0.15 0 0);
+  --muted: oklch(0.96 0 0);  /* Light gray */
+  --muted-foreground: oklch(0.5 0 0);  /* Medium gray */
+  --accent: oklch(0.95 0 0);
+  --accent-foreground: oklch(0.15 0 0);
+  --destructive: oklch(0.55 0.12 25);
+  --destructive-foreground: oklch(0.98 0.01 25);
+  --border: oklch(0.9 0 0);  /* Light gray border */
+  --input: oklch(0.9 0 0);
+  --ring: oklch(0.15 0 0);
+  
+  /* Chart Tokens */
+  --chart-1: oklch(0.45 0.04 60);
+  --chart-2: oklch(0.55 0.03 140);
+  --chart-3: oklch(0.35 0.03 30);
+  --chart-4: oklch(0.65 0.04 80);
+  --chart-5: oklch(0.50 0.02 200);
+  
+  /* Sidebar Tokens */
+  --sidebar: oklch(0.97 0.005 60);
+  --sidebar-foreground: oklch(0.25 0.02 60);
+  --sidebar-primary: oklch(0.22 0.02 60);
+  --sidebar-primary-foreground: oklch(0.98 0.005 60);
+  --sidebar-accent: oklch(0.92 0.01 60);
+  --sidebar-accent-foreground: oklch(0.22 0.02 60);
+  --sidebar-border: oklch(0.90 0.005 60);
+  --sidebar-ring: oklch(0.22 0.02 60);
+  
+  /* Custom Heart Pink Color */
+  --heart-pink: #F4A7B9;
+  --heart-border: #DB4D6D;
+}
+
+.dark {
+  --background: oklch(0.14 0.01 60);
+  --foreground: oklch(0.92 0.005 60);
+  --card: oklch(0.16 0.01 60);
+  --card-foreground: oklch(0.92 0.005 60);
+  --popover: oklch(0.16 0.01 60);
+  --popover-foreground: oklch(0.92 0.005 60);
+  --primary: oklch(0.88 0.03 70);
+  --primary-foreground: oklch(0.14 0.01 60);
+  --secondary: oklch(0.22 0.01 60);
+  --secondary-foreground: oklch(0.92 0.005 60);
+  --muted: oklch(0.22 0.01 60);
+  --muted-foreground: oklch(0.65 0.01 60);
+  --accent: oklch(0.25 0.02 60);
+  --accent-foreground: oklch(0.92 0.005 60);
+  --destructive: oklch(0.45 0.12 25);
+  --destructive-foreground: oklch(0.95 0.01 25);
+  --border: oklch(0.25 0.01 60);
+  --input: oklch(0.25 0.01 60);
+  --ring: oklch(0.88 0.03 70);
+  
+  /* Chart Tokens */
+  --chart-1: oklch(0.75 0.04 70);
+  --chart-2: oklch(0.65 0.04 160);
+  --chart-3: oklch(0.85 0.05 40);
+  --chart-4: oklch(0.70 0.03 210);
+  --chart-5: oklch(0.60 0.04 320);
+  
+  /* Sidebar Tokens */
+  --sidebar: oklch(0.12 0.01 60);
+  --sidebar-foreground: oklch(0.85 0.01 60);
+  --sidebar-primary: oklch(0.88 0.03 70);
+  --sidebar-primary-foreground: oklch(0.14 0.01 60);
+  --sidebar-accent: oklch(0.20 0.01 60);
+  --sidebar-accent-foreground: oklch(0.92 0.005 60);
+  --sidebar-border: oklch(0.22 0.01 60);
+  --sidebar-ring: oklch(0.88 0.03 70);
+}
+
+@theme inline {
+  /* Shadcn Core Mapping */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Charts Mapping */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar Mapping */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Custom Heart Pink */
+  --color-heart-pink: var(--heart-pink);
+  --color-heart-border: var(--heart-border);
+
+  /* Typography */
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  /* Radius - All sharp corners */
+  --radius-lg: 0rem;
+  --radius-md: 0rem;
+  --radius-sm: 0rem;
+  --radius-xl: 0rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply scroll-smooth antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans min-h-screen;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  code, pre {
+    @apply font-mono;
+  }
+
+  ::selection {
+    @apply bg-primary/20 text-primary;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/20 rounded-full hover:bg-muted-foreground/40;
+  }
+}
+
+/* Advanced minimalist design system with sophisticated details */
+@layer components {
+  /* Elevated card system with subtle depth */
+  .luxury-card {
+    @apply bg-white border border-border/20 transition-all duration-500 ease-out;
+  }
+  
+  .luxury-card:hover {
+    @apply border-border/40;
+  }
+  
+  /* Sophisticated button system */
+  .luxury-button {
+    @apply relative overflow-hidden transition-all duration-300 ease-out;
+    @apply border-0 bg-black text-white;
+    @apply before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent;
+    @apply before:translate-x-[-100%] before:transition-transform before:duration-700;
+  }
+  
+  .luxury-button:hover:before {
+    @apply translate-x-[100%];
+  }
+  
+  .luxury-button-outline {
+    @apply relative overflow-hidden transition-all duration-300 ease-out;
+    @apply border border-black/20 bg-transparent text-black;
+    @apply hover:border-black hover:bg-black hover:text-white;
+  }
+  
+  /* Unified typography system - Only 2 font sizes */
+  /* Using Tailwind's built-in text-xl (20px) and text-base (16px) classes */
+  
+  /* Typography classes */
+  .luxury-heading {
+    @apply text-base md:text-xl lg:text-2xl font-light leading-relaxed tracking-[-0.01em];
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  }
+  
+  .luxury-subheading {
+    @apply text-base md:text-xl lg:text-2xl font-light leading-relaxed tracking-[-0.01em];
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  }
+  
+  .luxury-body {
+    @apply text-xs md:text-base lg:text-lg font-light leading-relaxed;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+  
+  .luxury-caption {
+    @apply text-xs md:text-base lg:text-lg font-medium tracking-[0.1em] uppercase;
+    font-feature-settings: 'kern' 1, 'smcp' 1;
+  }
+  
+  /* Hide scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Sophisticated overlays */
+  .luxury-overlay {
+    @apply absolute inset-0;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.2) 30%,
+      rgba(0, 0, 0, 0.1) 60%,
+      rgba(255, 255, 255, 0.8) 100%
+    );
+  }
+  
+  /* Micro-interactions */
+  .luxury-interactive {
+    @apply transition-all duration-200 ease-out;
+    @apply hover:scale-[1.01] active:scale-[0.99];
+  }
+  
+  /* Glass morphism effects */
+  .luxury-glass {
+    @apply backdrop-blur-xl bg-white/80;
+    @apply border border-white/20;
+  }
+  
+  /* Sophisticated borders */
+  .luxury-border {
+    @apply relative;
+  }
+  
+  .luxury-border::before {
+    @apply absolute inset-0 rounded-[inherit];
+    content: '';
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+  }
+  
+  /* Premium spacing system */
+  .luxury-section {
+    @apply py-8 md:py-12 lg:py-16;
+  }
+  
+  .luxury-container {
+    @apply container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16;
+    max-width: 1400px;
+  }
+  
+  /* First section adjustment to account for fixed header */
+  .luxury-section:first-child {
+    @apply pt-8 md:pt-12 lg:pt-16;
+  }
+  
+  /* Responsive improvements */
+  @media (max-width: 640px) {
+    .luxury-section {
+      @apply py-6;
+    }
+    .luxury-section:first-child {
+      @apply pt-6;
+    }
+  }
+  
+  /* Full screen optimizations */
+  @media (min-width: 1920px) {
+    .luxury-container {
+      max-width: 1600px;
+      @apply px-20;
+    }
+  }
+  
+  /* Ultra-wide screen support */
+  @media (min-width: 2560px) {
+    .luxury-container {
+      max-width: 1800px;
+      @apply px-24;
+    }
+  }
+  
+  /* Sophisticated animations */
+  .luxury-fade-in {
+    animation: luxuryFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  
+  @keyframes luxuryFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(24px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  /* Image enhancement */
+  .luxury-image {
+    @apply transition-all duration-700 ease-out;
+    filter: contrast(1.05) saturate(1.1);
+  }
+  
+  .luxury-image:hover {
+    transform: scale(1.05);
+    filter: contrast(1.1) saturate(1.2);
+  }
+  
+  /* Status indicators */
+  .luxury-badge {
+    @apply inline-flex items-center px-3 py-1 font-medium tracking-[0.1em] uppercase;
+    @apply bg-white/95 text-black/85 backdrop-blur-sm;
+    @apply border border-black/15 ;
+  }
+  
+  .luxury-badge-premium {
+    @apply bg-black text-white border-black ;
+  }
+}
+
+/* Enhanced hover effects inspired by high-end real estate websites */
+@layer components {
+  /* Modern service card with sophisticated design */
+  .service-card {
+    @apply relative bg-white border border-black/5 transition-all duration-500 ease-out;
+    @apply cursor-pointer overflow-hidden;
+  }
+  
+  .service-card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-black/[0.02] to-transparent;
+    @apply opacity-0 transition-opacity duration-500;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-6px);
+    @apply border-black/10;
+  }
+  
+  .service-card:hover::before {
+    @apply opacity-100;
+  }
+  
+  /* Service icon with elegant animation */
+  .service-icon {
+    @apply relative transition-all duration-400 ease-out;
+    @apply bg-black/5;
+  }
+  
+  .service-icon::after {
+    content: '';
+    @apply absolute inset-0 rounded-full bg-black/10;
+    @apply scale-0 transition-transform duration-400;
+  }
+  
+  .service-card:hover .service-icon::after {
+    @apply scale-110;
+  }
+  
+  /* Typography enhancements */
+  .service-title {
+    @apply transition-all duration-300;
+  }
+  
+  .service-card:hover .service-title {
+    @apply text-black;
+  }
+  
+  .service-description {
+    @apply transition-all duration-300;
+  }
+  
+  .service-card:hover .service-description {
+    @apply text-black/70;
+  }
+  
+  .service-card:hover .service-icon {
+    @apply bg-black text-white;
+  }
+  
+  /* Arrow animation */
+  .service-arrow {
+    @apply transition-all duration-300 opacity-0;
+    @apply translate-x-[-8px];
+  }
+  
+  .service-card:hover .service-arrow {
+    @apply opacity-100 translate-x-0;
+  }
+  
+  /* Clean area exploration design */
+  .area-card {
+    @apply relative overflow-hidden transition-all duration-500 ease-out;
+    @apply cursor-pointer bg-white border border-black/5;
+  }
+  
+  .area-card:hover {
+    @apply border-black/20;
+    transform: translateY(-2px);
+  }
+  
+  .area-image {
+    @apply transition-transform duration-700 ease-out;
+  }
+  
+  .area-card:hover .area-image {
+    transform: scale(1.05);
+  }
+  
+  .area-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent;
+    @apply opacity-0 transition-opacity duration-500;
+  }
+  
+  .area-card:hover .area-overlay {
+    @apply opacity-100;
+  }
+  
+  .area-content {
+    @apply absolute bottom-0 left-0 right-0 p-6 text-white;
+    @apply transform translate-y-2 transition-transform duration-500;
+  }
+  
+  .area-card:hover .area-content {
+    @apply translate-y-0;
+  }
+  
+  /* Area selector improvements */
+  .area-selector {
+    @apply relative bg-white/90 backdrop-blur-sm border border-black/10;
+    @apply transition-all duration-300 hover:bg-white hover:border-black/20;
+  }
+  
+  .area-selector.active {
+    @apply bg-black text-white border-black;
+  }
+  
+  .area-selector:hover {
+    /* Hover styles handled by other classes */
+  }
+  
+  .area-number {
+    @apply text-xs font-mono opacity-60 transition-opacity duration-300;
+  }
+  
+  .area-selector:hover .area-number,
+  .area-selector.active .area-number {
+    @apply opacity-100;
+  }
+  
+  .area-name {
+    @apply text-sm font-medium transition-all duration-300;
+  }
+  
+  .area-selector:hover .area-name,
+  .area-selector.active .area-name {
+    @apply font-semibold;
+  }
+  
+  /* Property card enhanced hover */
+  .property-card {
+    @apply relative overflow-hidden transition-all duration-700 ease-out;
+  }
+  
+  .property-card:hover {
+    transform: translateY(-12px) rotateX(2deg);
+  }
+  
+  /* Image overlay effects */
+  .property-image-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent;
+    @apply opacity-0 transition-opacity duration-500;
+  }
+  
+  .property-card:hover .property-image-overlay {
+    @apply opacity-100;
+  }
+  
+  /* Magnetic button effect */
+  .magnetic-button {
+    @apply relative transition-all duration-300 ease-out;
+    @apply hover:scale-105 active:scale-95;
+  }
+  
+  /* Ripple effect */
+  .ripple-effect {
+    @apply relative overflow-hidden;
+  }
+  
+  .ripple-effect::after {
+    content: '';
+    @apply absolute top-1/2 left-1/2 w-0 h-0 rounded-full bg-white/20;
+    @apply transition-all duration-500 ease-out;
+    transform: translate(-50%, -50%);
+  }
+  
+  .ripple-effect:hover::after {
+    @apply w-full h-full;
+    padding-bottom: 100%;
+  }
+  
+  /* Language selector with elegant dropdown */
+  .language-selector {
+    @apply relative;
+  }
+  
+  .language-dropdown {
+    @apply absolute top-full right-0 mt-2 w-48 bg-white rounded-lg border border-black/10;
+    @apply border border-black/10 opacity-0 invisible;
+    @apply transition-all duration-300 ease-out;
+    transform: translateY(-10px);
+  }
+  
+  .language-selector:hover .language-dropdown {
+    @apply opacity-100 visible;
+    transform: translateY(0);
+  }
+  
+  /* Sophisticated text reveal animation */
+  .text-reveal {
+    @apply relative overflow-hidden;
+  }
+  
+  .text-reveal::before {
+    content: '';
+    @apply absolute inset-0 bg-white;
+    transform: translateX(-100%);
+    @apply transition-transform duration-700 ease-out;
+  }
+  
+  .text-reveal.animate::before {
+    transform: translateX(100%);
+  }
+  
+  /* Premium loading states */
+  .luxury-skeleton {
+    @apply bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200;
+    @apply animate-pulse;
+    background-size: 200% 100%;
+    animation: luxurySkeleton 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes luxurySkeleton {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  /* Cursor follow effect for interactive elements */
+  .cursor-magnetic {
+    @apply transition-transform duration-300 ease-out;
+  }
+  
+  /* Enhanced focus states */
+  .luxury-focus {
+    @apply focus:outline-none focus:ring-2 focus:ring-black/20 focus:ring-offset-2;
+    @apply focus:ring-offset-white transition-all duration-200;
+  }
+  
+  /* Scrollbar hide utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ========================================
+ * Bottom Bar Warm Colors (from 截图1438)
+ * Only for footer/bottom sections
+ * ======================================== */
+
+@layer components {
+  /* Warm footer/bottom bar styling */
+  .warm-footer {
+    background: linear-gradient(135deg, oklch(0.98 0.005 60) 0%, oklch(0.96 0.008 60) 100%);
+    color: oklch(0.15 0.01 60);
+  }
+  
+  /* Warm footer text */
+  .warm-footer-text {
+    color: oklch(0.25 0.015 60);
+  }
+  
+  /* Warm footer dividers */
+  .warm-footer-divider {
+    border-color: oklch(0.9 0.01 60);
+  }
+}

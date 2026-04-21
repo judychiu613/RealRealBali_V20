@@ -1,0 +1,25 @@
+{
+  "documents": [],
+  "tables_parsed": [],
+  "tables_source_info": [],
+  "images": [
+    {
+      "original_name": "截图9649",
+      "file_name": "截图9649.png",
+      "file_path": "/workspace/bali_property_agency/public/images/截图9649.png",
+      "rel_path": "images/截图9649.png",
+      "file_type": "png",
+      "category": "images"
+    }
+  ],
+  "summary": {
+    "total_files": 1,
+    "by_category": {
+      "documents": 0,
+      "tables_parsed": 0,
+      "tables_source_info": 0,
+      "images": 1
+    },
+    "processing_time": null
+  }
+}
